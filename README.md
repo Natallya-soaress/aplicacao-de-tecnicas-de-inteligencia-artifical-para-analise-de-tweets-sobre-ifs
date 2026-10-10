@@ -1,88 +1,104 @@
-Aplicação de Técnicas de Inteligência Artificial para Análise de Tweets sobre Institutos Federais Brasileiros
+# Aplicação de Técnicas de Inteligência Artificial para Análise de Tweets sobre Institutos Federais Brasileiros
 
-Código e coleções do trabalho de conclusão de curso (Bacharelado em Ciência da Computação, Instituto Federal de Goiás, Câmpus Anápolis, 2023), desenvolvido a partir da pesquisa de iniciação científica (PIBIC).
+Este repositório contém o código, os artefatos e as coleções de dados do Trabalho de Conclusão de Curso (TCC) do Bacharelado em Ciência da Computação do **Instituto Federal de Goiás (IFG) – Câmpus Anápolis (2023)**. O projeto foi desenvolvido a partir de pesquisas de Iniciação Científica (PIBIC).
 
-Autora: Nátallya Soares Costa
-Orientador: Prof. Dr. Sérgio Daniel Carvalho Canuto
-Sobre o projeto
+- **Autora:** Nátallya Soares Costa
+- **Orientador:** Prof. Dr. Sérgio Daniel Carvalho Canuto
 
-O trabalho investiga duas tarefas de Processamento de Linguagem Natural sobre tweets em português que mencionam os Institutos Federais (IFs) do Brasil:
+---
 
-Análise de sentimento (positivo, negativo, neutro), comparando 11 técnicas: métodos léxicos, aprendizado de máquina clássico e modelos baseados em transformers.
-Modelagem de tópicos com BERTopic, em nível nacional e por região do país.
+## 📋 Sobre o Projeto
 
-O processo seguiu as etapas de descoberta de conhecimento em bases de dados (KDD): coleta, pré-processamento, mineração e validação.
+O trabalho investiga tarefas de **Processamento de Linguagem Natural (PLN)** aplicadas a tweets em português que mencionam os Institutos Federais (IFs) do Brasil, focando em duas frentes principais:
 
-Principais resultados
-Os modelos baseados em transformers superaram claramente os métodos léxicos e os clássicos.
-O BERTimbau (pré-treinado em português) foi o mais efetivo, com Macro-F1 de 0,86 na coleção "Instituto Federal".
-Léxicos e métodos clássicos ficaram abaixo de 0,64 de Macro-F1.
-A modelagem de tópicos revelou temas globais (comunicados institucionais, ansiedade com provas) e regionais (por exemplo, eclipse anular no Nordeste e suspensão de aulas por chuvas no Sul).
-Estrutura do repositório
-Pasta	Conteúdo
-colecoes/	Coleções de tweets utilizadas nos experimentos
-pre-processamento/	Etapas de preparação dos dados textuais
-algoritmos-nao-supervisionados/	Métodos baseados em dicionários léxicos (Sentilex-PT e Vader)
-algoritmos-classicos/	Random Forests, Multinomial Naive Bayes, SVM e kNN
-agoritmos-baseados-em-transformers/	BERTweet, RoBERTa, BERTimbau, m-BERT e XLM-RoBERTa
-modelagem-topicos/	Aplicação do BERTopic (tópicos globais e regionais)
-Dados
+1. **Análise de Sentimento (Positivo, Negativo, Neutro):** Comparação de 11 abordagens, incluindo métodos baseados em dicionários (léxicos), aprendizado de máquina clássico e modelos avançados baseados em *Transformers*.
+2. **Modelagem de Tópicos com BERTopic:** Identificação de temas e discussões recorrentes tanto em nível nacional quanto regionalizado por regiões do país.
 
-Foram usadas duas coleções, ambas em português e sem retweets:
+O fluxo metodológico seguiu as etapas de **Descoberta de Conhecimento em Bases de Dados (KDD)**: coleta, pré-processamento, mineração e validação.
 
-Coleção	Período	Finalidade	Tamanho
-Rotulada (termos "IFG", "Instituto Federal" e "Institutos Federais")	out/2021 a fev/2022	Avaliação das técnicas de sentimento	~2.500 tweets coletados
-Regional (siglas de todos os IFs do país)	jan/2023 a nov/2023	Modelagem de tópicos	~18.000 tweets
+---
 
-A primeira coleção foi obtida pela API v2 do Twitter (filtered stream). A segunda, por coleta periódica (a cada hora) de tweets que continham a sigla de algum IF, dividida em cinco bases, uma por região (Centro-Oeste, Nordeste, Norte, Sudeste e Sul).
+## 🗂️ Estrutura do Repositório
 
-Rotulação: cada tweet foi rotulado manualmente por três estudantes; mensagens sem consenso foram descartadas. Mensagens dos setores de comunicação dos institutos foram removidas para avaliar apenas o discurso da comunidade.
+| Pasta | Conteúdo |
+| :--- | :--- |
+| `colecoes/` | Coleções de tweets utilizadas nos experimentos |
+| `pre-processamento/` | Scripts e etapas de preparação dos dados textuais |
+| `algoritmos-nao-supervisionados/` | Métodos baseados em dicionários léxicos (*Sentilex-PT* e *Vader*) |
+| `algoritmos-classicos/` | Modelos de Machine Learning clássico (*Random Forests, Multinomial Naive Bayes, SVM e kNN*) |
+| `algoritmos-baseados-em-transformers/` | Modelos de Deep Learning (*BERTweet, RoBERTa, BERTimbau, m-BERT e XLM-RoBERTa*) |
+| `modelagem-topicos/` | Aplicação do *BERTopic* para extração de tópicos globais e regionais |
 
-Coleção rotulada	Positivos	Negativos	Neutros
-IFG	128	271	269
-Instituto Federal	263	613	580
+---
 
-Aviso: o uso e a redistribuição de textos de tweets estão sujeitos aos termos da plataforma. [Confirme se a pasta colecoes/ contém o texto completo ou apenas identificadores, e ajuste esta seção.]
+## 📊 Coleta e Dados
 
-Pré-processamento
-Normalização (minúsculas) e tokenização
-Representações de texto: TF-IDF, GloVe e FastText (TF-IDF teve o melhor resultado e foi usado nas tabelas abaixo)
-Tradução automática para inglês (API Google Translation Basic) para os modelos nativos em inglês: Vader, BERTweet e RoBERTa
-Configuração dos experimentos
-Método	Configuração
-Sentilex-PT, Vader	Sem parametrização (dicionário e regras fixas)
-Random Forests	200 árvores sem poda, √n termos por divisão
-Multinomial Naive Bayes	Versão multinomial
-SVM	Kernel linear; C escolhido por validação cruzada entre 6 valores de 10⁻³ a 10³
-kNN	k escolhido em {2, 5, 10, 20, 30} por validação cruzada em 5 partes
-Transformers	Ajuste fino com 30 épocas, learning rate 10⁻⁵ e batch size 30
-BERTopic	Configuração padrão multilíngue (uni, bi e trigramas), 30 termos por tópico; número de tópicos (2 a 20) escolhido pelo escore de coerência, com 10 execuções por valor
+Foram utilizadas duas coleções distintas de tweets em português, ambas higienizadas (sem retweets e sem mensagens dos setores de comunicação oficiais para priorizar o discurso da comunidade acadêmica):
 
-Validação: validação cruzada em 5 partes (5-fold), com Macro-F1, Micro-F1 e matriz de confusão. O Macro-F1 foi priorizado por penalizar modelos que favorecem a classe majoritária.
+| Coleção | Período | Finalidade | Tamanho |
+| :--- | :--- | :--- | :--- |
+| **Rotulada** *(termos: "IFG", "Instituto Federal", "Institutos Federais")* | Out/2021 a Fev/2022 | Avaliação de técnicas de sentimento | ~2.500 tweets |
+| **Regional** *(siglas de todos os IFs do país)* | Jan/2023 a Nov/2023 | Modelagem de tópicos | ~18.000 tweets |
 
-Resultados: análise de sentimento
+* **Coleção 1:** Obtida via API v2 do Twitter (*filtered stream*). Rotulada manualmente por três estudantes (conflitos descartados).
+* **Coleção 2:** Coleta periódica (horária) dividida em cinco bases geográficas (Centro-Oeste, Nordeste, Norte, Sudeste e Sul).
 
-Macro-F1 / Micro-F1 por coleção.
+### Distribuição da Coleção Rotulada
+* **Positivos:** Menoritária (gerou desafios de desbalanceamento).
+* **Negativos / Neutros:** Maior representatividade.
 
-Abordagem	IFG	Instituto Federal
-Sentilex-PT	0,37 / 0,43	0,39 / 0,45
-Vader	0,47 / 0,48	0,54 / 0,55
-Random Forests	0,56 / 0,49	0,58 / 0,52
-Multinomial Naive Bayes	0,56 / 0,51	0,62 / 0,57
-SVM	0,58 / 0,54	0,63 / 0,59
-kNN	0,52 / 0,41	0,57 / 0,48
-BERTweet	0,73 / 0,68	0,74 / 0,69
-RoBERTa	0,54 / 0,44	0,76 / 0,73
-BERTimbau	0,78 / 0,75	0,86 / 0,84
-m-BERT	0,53 / 0,38	0,68 / 0,60
-XLM-RoBERTa	0,39 / 0,20	0,41 / 0,19
+---
 
-Observações:
+## ⚙️ Configuração dos Experimentos
 
-Ruídos de tradução prejudicaram Vader, BERTweet e RoBERTa.
-A classe positiva é minoritária (desbalanceamento), o que dificultou os métodos clássicos.
-O desvio padrão dos transformers entre as partes da validação cruzada foi alto na coleção IFG (menos dados).
-Resultados: modelagem de tópicos
-Na coleção completa, a maior coerência média foi obtida com 4 tópicos.
-Tópicos globais de destaque: comunicação aluno-instituição (editais, vagas, inscrições) e ansiedade/medo em relação a provas.
-Tópicos regionais: votação do IFB (Centro-Oeste), eclipse anular (Nordeste), rotina dos estudantes (Norte), preocupação com processos seletivos (Sudeste) e suspensão de aulas por chuvas (Sul).
+* **Pré-processamento:** Normalização (minúsculas), tokenização e representação textual (*TF-IDF*, *GloVe* e *FastText* — com o *TF-IDF* apresentando o melhor desempenho).
+* **Tradução Automática:** Aplicada via API do Google Translation para os modelos nativos em inglês (*Vader*, *BERTweet* e *RoBERTa*).
+
+| Abordagem | Configuração Principal |
+| :--- | :--- |
+| **Sentilex-PT / Vader** | Sem parametrização (dicionários e regras fixas) |
+| **Random Forests** | 200 árvores sem poda, $\sqrt{n}$ termos por divisão |
+| **Multinomial Naive Bayes** | Versão multinomial padrão |
+| **SVM** | Kernel linear; parâmetro $C$ escolhido por validação cruzada ($10^{-3}$ a $10^3$) |
+| **kNN** | $k \in \{2, 5, 10, 20, 30\}$ via validação cruzada em 5 partes |
+| **Transformers** | Ajuste fino (*Fine-Tuning*) com 30 épocas, *learning rate* $10^{-5}$ e *batch size* 30 |
+| **BERTopic** | Configuração multilíngue (uni, bi e trigramas), 30 termos por tópico; número de tópicos ($2$ a $20$) otimizado por coerência (10 execuções) |
+
+* **Validação:** Validação cruzada de 5 partes (5-fold), avaliada pelas métricas **Macro-F1**, **Micro-F1** e Matriz de Confusão (com prioridade para o *Macro-F1* devido ao desbalanceamento de classes).
+
+---
+
+## 📈 Principais Resultados
+
+### 1. Análise de Sentimento (Macro-F1 / Micro-F1)
+
+| Abordagem | Coleção IFG | Coleção Instituto Federal |
+| :--- | :---: | :---: |
+| **Sentilex-PT** | 0,37 / 0,43 | 0,39 / 0,45 |
+| **Vader** | 0,47 / 0,48 | 0,54 / 0,55 |
+| **Random Forests** | 0,56 / 0,49 | 0,58 / 0,52 |
+| **Multinomial Naive Bayes** | 0,56 / 0,51 | 0,62 / 0,57 |
+| **SVM** | **0,58 / 0,54** | **0,63 / 0,59** |
+| **kNN** | 0,52 / 0,41 | 0,57 / 0,48 |
+| **BERTweet** | 0,73 / 0,68 | 0,74 / 0,69 |
+| **RoBERTa** | 0,54 / 0,44 | 0,76 / 0,73 |
+| **BERTimbau** | **0,78 / 0,75** | **0,86 / 0,84** |
+| **m-BERT** | 0,53 / 0,38 | 0,68 / 0,60 |
+| **XLM-RoBERTa** | 0,39 / 0,20 | 0,41 / 0,19 |
+
+> **Destaques:**
+> * Os modelos baseados em *Transformers* superaram claramente os métodos léxicos e clássicos.
+> * O **BERTimbau** (pré-especificamente treinado em português) foi o mais efetivo, alcançando **Macro-F1 de 0,86** na coleção "Instituto Federal".
+> * Métodos léxicos e clássicos ficaram com pontuações abaixo de 0,64 de Macro-F1.
+> * Ruídos decorrentes de tradução automática prejudicaram o desempenho de modelos como *Vader*, *BERTweet* e *RoBERTa*. O desvio padrão dos *Transformers* foi mais elevado na coleção IFG devido ao menor volume amostral.
+
+### 2. Modelagem de Tópicos
+* A coerência média ideal na coleção completa foi obtida com **4 tópicos principais**.
+* **Tópicos Globais:** Comunicação aluno-instituição (editais, vagas, inscrições) e ansiedade/medo em relação a avaliações e provas.
+* **Tópicos Regionais Exemplares:** * *Centro-Oeste:* Discussões sobre processos/votações do IFB.
+  * *Nordeste:* Repercussão do eclipse anular.
+  * *Norte:* Rotina e vivências estudantis.
+  * *Sudeste:* Expectativas e preocupações com processos seletivos.
+  * *Sul:* Avisos e impactos de suspensão de aulas por condições climáticas (chuvas).
+
+---
