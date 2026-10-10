@@ -7,7 +7,7 @@ Este repositório contém o código, os artefatos e as coleções de dados do Tr
 
 ---
 
-## 📋 Sobre o Projeto
+## Sobre o Projeto
 
 O trabalho investiga tarefas de **Processamento de Linguagem Natural (PLN)** aplicadas a tweets em português que mencionam os Institutos Federais (IFs) do Brasil, focando em duas frentes principais:
 
@@ -18,7 +18,7 @@ O fluxo metodológico seguiu as etapas de **Descoberta de Conhecimento em Bases 
 
 ---
 
-## 🗂️ Estrutura do Repositório
+## Estrutura do Repositório
 
 | Pasta | Conteúdo |
 | :--- | :--- |
@@ -31,7 +31,7 @@ O fluxo metodológico seguiu as etapas de **Descoberta de Conhecimento em Bases 
 
 ---
 
-## 📊 Coleta e Dados
+## Coleta e Dados
 
 Foram utilizadas duas coleções distintas de tweets em português, ambas higienizadas (sem retweets e sem mensagens dos setores de comunicação oficiais para priorizar o discurso da comunidade acadêmica):
 
@@ -49,7 +49,7 @@ Foram utilizadas duas coleções distintas de tweets em português, ambas higien
 
 ---
 
-## ⚙️ Configuração dos Experimentos
+## Configuração dos Experimentos
 
 * **Pré-processamento:** Normalização (minúsculas), tokenização e representação textual (*TF-IDF*, *GloVe* e *FastText* — com o *TF-IDF* apresentando o melhor desempenho).
 * **Tradução Automática:** Aplicada via API do Google Translation para os modelos nativos em inglês (*Vader*, *BERTweet* e *RoBERTa*).
@@ -68,7 +68,7 @@ Foram utilizadas duas coleções distintas de tweets em português, ambas higien
 
 ---
 
-## 📈 Principais Resultados
+## Principais Resultados
 
 ### 1. Análise de Sentimento (Macro-F1 / Micro-F1)
 
